@@ -2,13 +2,19 @@ package annotations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class TennisCoach implements Coach {
     //@Autowired
-
     private FortuneService fortuneService;
+
+    @Value("${foo.email}")
+    private String email;
+
+    @Value("${foo.team}")
+    private String team;
 
     public TennisCoach() {
         System.out.println(">> TennisCoach default constructor");
@@ -35,11 +41,11 @@ public class TennisCoach implements Coach {
 
     @Override
     public String getDailyWorkout() {
-        return "Move your rocket!";
+        return "Team \"" + team + "\", move your rocket!";
     }
 
     @Override
     public String getDailyFortune() {
-        return "TENNIS COACH: " + fortuneService.getFortune();
+        return "TENNIS COACH (" + email + "): " + fortuneService.getFortune();
     }
 }
